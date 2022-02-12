@@ -19,14 +19,16 @@ services:
         max-size: "10m"
 
   database:
-    image: docker.io/bitnami/mariadb:10.3
+    image: mysql:8.0
     container_name: ${COMPOSE_PROJECT_NAME}_database
     hostname: '[${COMPOSE_PROJECT_NAME}_database]'
+    volumes:
+      - ${DATABASE_ROOT}:/var/lib/mysql
     environment:
-      - MARIADB_USER=future-presents
-      - MARIADB_PASSWORD=${DB_PASSWORD}
-      - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
-      - MARIADB_DATABASE=future-presents
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      TZ: "Europe/Paris"
+    ports:
+      - ${DB_PORT:-3306}:3306
     restart: unless-stopped
     logging:
       options:

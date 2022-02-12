@@ -19,7 +19,8 @@ RUN rm -rf /var/lib/apt/lists \
     curl git \
     nodejs yarn npm \
     libicu-dev \
-    libzip-dev
+    libzip-dev \
+    default-mysql-client
 
 # Extensions PHP
 RUN apt install -y \
