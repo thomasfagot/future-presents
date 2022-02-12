@@ -11,6 +11,9 @@
     "psr/log": {
         "version": "3.0.0"
     },
+    "roave/security-advisories": {
+        "version": "dev-latest"
+    },
     "symfony/cache": {
         "version": "v6.0.3"
     },
