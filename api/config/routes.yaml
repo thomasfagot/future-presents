@@ -8,3 +8,6 @@ kernel:
 
 login:
     path: /login
+
+gesdinet_jwt_refresh_token:
+    path: /refresh-token

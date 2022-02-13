@@ -22,6 +22,7 @@ RUN rm -rf /var/lib/apt/lists \
     nodejs yarn npm \
     libicu-dev \
     libzip-dev \
+    unzip \
     default-mysql-client
 
 # Extensions PHP
