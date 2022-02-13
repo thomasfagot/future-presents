@@ -26,9 +26,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \JsonSe
     private array $roles = [];
 
     #[ORM\Column(type: 'string')]
+    private ?string $password = null;
+
     #[Assert\NotBlank]
     #[Assert\Length(min: 8)]
-    private ?string $password = null;
+    private ?string $plainPassword = null;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     #[Assert\Valid]
@@ -79,8 +81,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \JsonSe
         return $this;
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): self
     {
+        $this->plainPassword = null;
+
+        return $this;
     }
 
     public function getPerson(): ?Person
@@ -111,5 +116,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \JsonSe
             'email' => $this->getEmail(),
             'person' => $this->getPerson()?->jsonSerialize(),
         ];
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
     }
 }
