@@ -5,24 +5,34 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use App\Traits\IdEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+#[UniqueEntity('email')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface, \JsonSerializable
 {
     use IdEntity;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
+    #[Assert\Email]
     private ?string $email = null;
 
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
     #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 8)]
     private ?string $password = null;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    #[Assert\Valid]
+    #[Assert\NotBlank]
     private ?Person $person = null;
 
     public function getEmail(): ?string
@@ -93,5 +103,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->person = $person;
 
         return $this;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'email' => $this->getEmail(),
+            'person' => $this->getPerson()?->jsonSerialize(),
+        ];
     }
 }
