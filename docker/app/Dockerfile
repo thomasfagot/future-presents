@@ -35,9 +35,13 @@ RUN apt install -y \
 RUN a2enmod rewrite
 
 COPY apache.conf /etc/apache2/sites-enabled/apache.conf
+COPY .bash* /home/docker/
+RUN sed -i 's/\r$//' /home/docker/.bashrc
+
 RUN rm /etc/apache2/sites-enabled/000-default.conf && rm /etc/apache2/sites-available/000-default.conf
 
-RUN useradd -ms /bin/bash -u 1000 docker
+RUN useradd -ms /bin/bash -u 1000 docker \
+    && chown -R docker:docker /home/docker /var/www/html
 
 RUN echo Europe/Paris > /etc/timezone
 
