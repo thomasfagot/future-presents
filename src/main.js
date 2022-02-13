@@ -1,8 +1,5 @@
 import { createApp } from 'vue'
+import router from './router'
 import App from './App.vue'
 
-import BalmUI from 'balm-ui'
-import BalmUIPlus from 'balm-ui/src/scripts/balm-ui-plus'
-import 'balm-ui-css'
-
-createApp(App).use(BalmUI).use(BalmUIPlus).mount('#app')
+createApp(App).use(router).mount('#app')
