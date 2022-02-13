@@ -14,7 +14,8 @@
     "@vue/cli": "^4.5.15",
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.12",
+    "wave-ui": "^2.31.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

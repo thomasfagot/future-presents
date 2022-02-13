@@ -1,20 +1,23 @@
 <template>
-    <nav>
-        <router-link to="/">Accueil</router-link> |
-        <router-link to="/about">À propos</router-link> |
-        <router-link to="/register">Inscription</router-link> |
-        <router-link to="/login">Connexion</router-link>
-    </nav>
-    <router-view />
+    <w-app>
+        <AppMenu />
+        <router-view />
+    </w-app>
 </template>
 
 <script>
+import AppMenu from '@/AppMenu'
+
 export default {
     name: 'App',
+    components: { AppMenu },
 }
 </script>
 
 <style>
+body {
+    margin: 0;
+}
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
