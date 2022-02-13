@@ -1,8 +1,10 @@
 FROM php:8.1-apache-bullseye
 
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+ENV DOC_APACHE_SERVERNAME="future-presents" \
+    DOC_APACHE_SERVERADMIN="thomasfagot39@gmail.com" \
+	APACHE_RUN_USER="docker" \
+    APACHE_RUN_GROUP="docker" \
+    APACHE_LOG_DIR="/var/log/apache2"
 
 # Installation des paquets globaux
 RUN rm -rf /var/lib/apt/lists \
@@ -28,6 +30,9 @@ RUN apt install -y \
     && docker-php-ext-install pdo_mysql intl zip opcache \
     && pecl install apcu && docker-php-ext-enable apcu \
     && pecl install xdebug && docker-php-ext-enable xdebug && sed -i '1s/^/;Set XDEBUG_ENABLE=true to enable\n;/' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+COPY apache.conf /etc/apache2/sites-enabled/apache.conf
+RUN rm /etc/apache2/sites-enabled/000-default.conf && rm /etc/apache2/sites-available/000-default.conf
 
 RUN useradd -ms /bin/bash -u 1000 docker
 

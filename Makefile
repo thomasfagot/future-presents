@@ -9,6 +9,8 @@ help:
 	@echo 'Usage: make [TARGET]'
 	@echo 'Targets:'
 	@echo '  build              Construit les images'
+	@echo '  assets             Construit les assets de production'
+	@echo '  serve              Lance le serveur avec les assets de développement'
 	@echo '  start              Démarre les containers'
 	@echo '  stop               Stoppe les containers'
 	@echo '  down               Stoppe et détruit les containers'
@@ -55,7 +57,13 @@ bash: check
 	$(DC_COMMAND) exec --workdir="/var/www/html" -u docker app bash
 
 ccw: check
-	$(DC_COMMAND) exec --workdir="/var/www/html" -u docker app bash -c 'php bin/console c:c && php bin/console c:w'
+	$(DC_COMMAND) exec --workdir="/var/www/html/api" -u docker app bash -c 'php bin/console c:c && php bin/console c:w'
+
+assets: check
+	$(DC_COMMAND) exec --workdir="/var/www/html" -u docker app bash -c 'npm run build'
+
+serve: check-dev
+	$(DC_COMMAND) exec --workdir="/var/www/html" -u docker app bash -c "npm run serve --port=${VUE_PORT || 8080}"
 
 # Aliases
 up: start
