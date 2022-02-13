@@ -31,6 +31,8 @@ RUN apt install -y \
     && pecl install apcu && docker-php-ext-enable apcu \
     && pecl install xdebug && docker-php-ext-enable xdebug && sed -i '1s/^/;Set XDEBUG_ENABLE=true to enable\n;/' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
+RUN a2enmod rewrite
+
 COPY apache.conf /etc/apache2/sites-enabled/apache.conf
 RUN rm /etc/apache2/sites-enabled/000-default.conf && rm /etc/apache2/sites-available/000-default.conf
 
