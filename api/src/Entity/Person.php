@@ -186,6 +186,7 @@ class Person
     public function jsonSerialize(): array
     {
         return [
+            'id' => $this->getId(),
             'avatar' => $this->getAvatar(),
             'dateOfBirth' => $this->getDateOfBirth()?->format('c'),
             'firstname' => $this->getFirstname(),
