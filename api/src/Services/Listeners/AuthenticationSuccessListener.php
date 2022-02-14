@@ -9,7 +9,7 @@ class AuthenticationSuccessListener
 {
     private bool $secure = false;
 
-    public function __construct(private int $ttl)
+    public function __construct(private int $token_ttl)
     {
     }
 
@@ -19,7 +19,7 @@ class AuthenticationSuccessListener
         $token = $data['token'];
         unset($data['token']);
         $event->setData($data);
-        $ttl = (new \DateTime())->add(new \DateInterval('PT'.$this->ttl.'M'));
+        $ttl = (new \DateTime())->add(new \DateInterval('PT'.$this->token_ttl.'M'));
         $event->getResponse()->headers->setCookie(new Cookie(
             'BEARER',
             $token,

@@ -10,7 +10,7 @@ class RefreshTokenListener implements EventSubscriberInterface
 {
     private bool $secure = false;
 
-    public function __construct(private int $tokenTtl)
+    public function __construct(private int $ttl)
     {
     }
 
@@ -20,7 +20,7 @@ class RefreshTokenListener implements EventSubscriberInterface
         $refreshToken = $data['refresh_token'];
         unset($data['refresh_token']);
         $event->setData($data);
-        $ttl = (new \DateTime())->add(new \DateInterval('PT'.$this->tokenTtl.'M'));
+        $ttl = (new \DateTime())->add(new \DateInterval('PT'.$this->ttl.'M'));
         $event->getResponse()->headers->setCookie(new Cookie(
             'REFRESH_TOKEN',
             $refreshToken,
