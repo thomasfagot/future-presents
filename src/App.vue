@@ -1,7 +1,9 @@
 <template>
     <w-app>
         <AppMenu />
-        <router-view />
+        <main id="app-content">
+            <router-view />
+        </main>
     </w-app>
 </template>
 
@@ -23,5 +25,16 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
+}
+#app-content {
+    margin-top: 3em;
+    padding: 10px;
+}
+.width-300px {
+    max-width: 300px;
+}
+.margin-center {
+    margin-right: auto;
+    margin-left: auto;
 }
 </style>
