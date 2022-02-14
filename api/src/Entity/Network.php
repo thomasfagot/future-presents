@@ -19,9 +19,13 @@ class Network
     #[ORM\ManyToMany(targetEntity: Person::class, inversedBy: 'networkCollection')]
     private Collection $personCollection;
 
+    #[ORM\OneToMany(mappedBy: 'network', targetEntity: Event::class)]
+    private Collection $eventCollection;
+
     public function __construct()
     {
         $this->personCollection = new ArrayCollection();
+        $this->eventCollection = new ArrayCollection();
     }
 
     public function getName(): ?string
@@ -53,6 +57,27 @@ class Network
     public function removePersonCollection(Person $person): self
     {
         $this->personCollection->removeElement($person);
+
+        return $this;
+    }
+
+    public function getEventCollection(): Collection
+    {
+        return $this->eventCollection;
+    }
+
+    public function addEventCollection(Event $event): self
+    {
+        if (!$this->eventCollection->contains($event)) {
+            $this->eventCollection[] = $event;
+        }
+
+        return $this;
+    }
+
+    public function removeEventCollection(Event $event): self
+    {
+        $this->eventCollection->removeElement($event);
 
         return $this;
     }

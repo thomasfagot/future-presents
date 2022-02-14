@@ -22,6 +22,9 @@ class Event
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $cover = null;
 
+    #[ORM\ManyToOne(inversedBy: 'eventCollection')]
+    private ?Network $network = null;
+
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: Wish::class)]
     private Collection $wishCollection;
 
@@ -88,5 +91,15 @@ class Event
         }
 
         return $this;
+    }
+
+    public function getNetwork(): ?Network
+    {
+        return $this->network;
+    }
+
+    public function setNetwork(?Network $network): void
+    {
+        $this->network = $network;
     }
 }
