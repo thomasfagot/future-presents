@@ -1,10 +1,11 @@
 <template>
-    <section class="width-300px text-left margin-center mt10">
+    <section class="width-400px text-left margin-center mt10">
         <w-card shadow :title="'Connexion'" title-class="blue-light5--bg">
             <w-form :no-keyup-validation="true">
                 <w-input
+                    autofocus
                     :class="'mb2'"
-                    label="e-mail"
+                    label="e-mail *"
                     :model-value="email"
                     :maxlength="255"
                     :name="'username'"
@@ -14,7 +15,7 @@
                 <w-input
                     :class="'mb2'"
                     :model-value="plainPassword"
-                    label="Mot de passe"
+                    label="Mot de passe *"
                     :name="'password'"
                     :type="'password'"
                     :validators="[validators.required]"

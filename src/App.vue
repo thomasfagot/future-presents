@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import AppMenu from '@/AppMenu'
+import AppMenu from '@/components/AppMenu'
 
 export default {
     name: 'App',
@@ -30,11 +30,14 @@ body {
     margin-top: 3em;
     padding: 10px;
 }
-.width-300px {
-    max-width: 300px;
+.width-400px {
+    max-width: 400px;
 }
 .margin-center {
     margin-right: auto;
     margin-left: auto;
+}
+.w-button.size--md {
+    height: 30px !important;
 }
 </style>
