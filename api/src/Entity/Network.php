@@ -19,7 +19,7 @@ class Network
     #[ORM\ManyToMany(targetEntity: Person::class, inversedBy: 'networkCollection')]
     private Collection $personCollection;
 
-    #[ORM\OneToMany(mappedBy: 'network', targetEntity: Event::class)]
+    #[ORM\OneToMany(mappedBy: 'network', targetEntity: Event::class, cascade: ['REMOVE'])]
     private Collection $eventCollection;
 
     public function __construct()

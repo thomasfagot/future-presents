@@ -25,7 +25,7 @@ class Wish
     #[ORM\JoinColumn(nullable: false)]
     private ?Event $event = null;
 
-    #[ORM\OneToMany(mappedBy: 'wish', targetEntity: Reservation::class)]
+    #[ORM\OneToMany(mappedBy: 'wish', targetEntity: Reservation::class, cascade: ['REMOVE'])]
     private Collection $reservationCollection;
 
     public function __construct()

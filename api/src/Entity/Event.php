@@ -25,7 +25,7 @@ class Event
     #[ORM\ManyToOne(inversedBy: 'eventCollection')]
     private ?Network $network = null;
 
-    #[ORM\OneToMany(mappedBy: 'event', targetEntity: Wish::class)]
+    #[ORM\OneToMany(mappedBy: 'event', targetEntity: Wish::class, cascade: ['REMOVE'])]
     private Collection $wishCollection;
 
     public function __construct()

@@ -38,10 +38,10 @@ class Person
     #[ORM\ManyToMany(targetEntity: Network::class, mappedBy: 'personCollection')]
     private Collection $networkCollection;
 
-    #[ORM\OneToMany(mappedBy: 'person', targetEntity: Wish::class)]
+    #[ORM\OneToMany(mappedBy: 'person', targetEntity: Wish::class, cascade: ['REMOVE'])]
     private Collection $wishCollection;
 
-    #[ORM\OneToMany(mappedBy: 'person', targetEntity: Reservation::class)]
+    #[ORM\OneToMany(mappedBy: 'person', targetEntity: Reservation::class, cascade: ['REMOVE'])]
     private Collection $reservationCollection;
 
     public function __construct()
