@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Network;
+use App\Entity\Person;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,13 +20,13 @@ class NetworkRepository extends ServiceEntityRepository
         parent::__construct($registry, Network::class);
     }
 
-    public function findForPerson(int $personId): array
+    public function findForPerson(Person $person): array
     {
         return $this->createQueryBuilder('a')
             ->leftJoin('a.eventCollection', 'e')->addSelect('e')
             ->leftJoin('a.personCollection', 'p')->addSelect('p')
             ->andWhere(':person MEMBER OF a.personCollection')
-            ->setParameter('person', $personId)
+            ->setParameter('person', $person)
             ->getQuery()
             ->getResult()
         ;
