@@ -20,8 +20,12 @@ class NetworkRepository extends ServiceEntityRepository
         parent::__construct($registry, Network::class);
     }
 
-    public function findForPerson(Person $person): array
+    public function findForPerson(?Person $person): array
     {
+        if (!$person) {
+            return [];
+        }
+
         return $this->createQueryBuilder('a')
             ->leftJoin('a.eventCollection', 'e')->addSelect('e')
             ->leftJoin('a.personCollection', 'p')->addSelect('p')

@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -34,12 +35,12 @@ class RegistrationController extends AbstractController
             return $this->json([
                 'success' => true,
                 'user' => $user
-            ]);
+            ], Response::HTTP_CREATED);
         }
 
         return $this->json([
             'success' => false,
             'errors' => $form->isSubmitted() ? $this->getFormErrors($form) : [],
-        ]);
+        ], Response::HTTP_BAD_REQUEST);
     }
 }

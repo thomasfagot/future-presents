@@ -2,15 +2,16 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\View\View;
+use Symfony\Component\HttpFoundation\Response;
 
-class HomeController extends AbstractController
+class HomeController extends AbstractFOSRestController
 {
-    #[Route('/', name: 'home')]
-    public function home(): JsonResponse
+    #[Rest\Get('/', name: 'home')]
+    public function home(): View
     {
-        return new JsonResponse(['message' => 'Hello']);
+        return $this->view(['message' => 'Hello'], Response::HTTP_OK);
     }
 }
