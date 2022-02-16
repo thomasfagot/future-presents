@@ -9,3 +9,7 @@ fos_rest:
         view_response_listener:  'force'
         formats:
           json: true
+    body_listener:
+        enabled: true
+        decoders:
+            json:   fos_rest.decoder.json

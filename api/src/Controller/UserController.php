@@ -3,25 +3,25 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\RegistrationType;
+use App\Form\UserType;
 use App\Traits\FormError;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Annotation\Route;
 
-class RegistrationController extends AbstractController
+class UserController extends AbstractFOSRestController
 {
     use FormError;
 
-    #[Route('/register', name: 'user', methods: 'post')]
-    public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): JsonResponse
+    #[Rest\Post('/register')]
+    public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): View
     {
         $user = new User();
-        $form = $this->createForm(RegistrationType::class, $user);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $user
@@ -32,13 +32,13 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->json([
+            return $this->view([
                 'success' => true,
                 'user' => $user
             ], Response::HTTP_CREATED);
         }
 
-        return $this->json([
+        return $this->view([
             'success' => false,
             'errors' => $form->isSubmitted() ? $this->getFormErrors($form) : [],
         ], Response::HTTP_BAD_REQUEST);
