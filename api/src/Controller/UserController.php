@@ -17,7 +17,7 @@ class UserController extends AbstractFOSRestController
 {
     use FormError;
 
-    #[Rest\Post('/register')]
+    #[Rest\Post('/register', name: 'user.new')]
     public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): View
     {
         $user = new User();
@@ -42,5 +42,11 @@ class UserController extends AbstractFOSRestController
             'success' => false,
             'errors' => $form->isSubmitted() ? $this->getFormErrors($form) : [],
         ], Response::HTTP_BAD_REQUEST);
+    }
+
+    #[Rest\Get('/users/{id}', name: 'user.view')]
+    public function get(User $user): View
+    {
+        return $this->view($user, Response::HTTP_OK);
     }
 }

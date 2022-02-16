@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity('email')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, \JsonSerializable
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use IdEntity;
 
@@ -108,15 +108,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \JsonSe
         $this->person = $person;
 
         return $this;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->getId(),
-            'email' => $this->getEmail(),
-            'person' => $this->getPerson()?->jsonSerialize(),
-        ];
     }
 
     public function getPlainPassword(): ?string

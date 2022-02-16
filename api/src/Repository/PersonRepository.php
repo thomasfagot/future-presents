@@ -18,4 +18,15 @@ class PersonRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Person::class);
     }
+
+    public function findForPerson(Person $person): array
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin('a.networkCollection', 'n')
+            ->andWhere(':person MEMBER OF n.personCollection')
+            ->setParameter('person', $person)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

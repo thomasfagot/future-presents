@@ -19,6 +19,10 @@ framework:
     php_errors:
         log: true
 
+    serializer:
+        circular_reference_handler: App\Services\Serializer\CircularReferenceHandler
+        enabled: true
+
 when@test:
     framework:
         test: true
