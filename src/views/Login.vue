@@ -5,20 +5,22 @@
                 <w-input
                     autofocus
                     :class="'mb2'"
+                    inner-icon-left="mdi mdi-email"
                     label="e-mail *"
-                    v-model="email"
                     :maxlength="255"
                     :name="'username'"
                     :type="'email'"
                     :validators="[validators.required, validators.email]"
+                    v-model="email"
                 ></w-input>
                 <w-input
                     :class="'mb2'"
-                    v-model="password"
+                    inner-icon-left="mdi mdi-key"
                     label="Mot de passe *"
                     :name="'password'"
                     :type="'password'"
                     :validators="[validators.required]"
+                    v-model="password"
                 ></w-input>
                 <div class="text-right mt4">
                     <w-button type="submit">Se connecter</w-button>

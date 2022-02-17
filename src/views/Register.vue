@@ -13,7 +13,9 @@
                     :maxlength="255"
                     v-model="user.person.firstname"
                     :name="'user[person][firstname]'"
-                    :validators="[validators.required]"
+                    :validators="[
+                        validators.required,
+                    ]"
                 ></w-input>
                 <w-input
                     :class="'mb2'"
@@ -24,6 +26,7 @@
                 ></w-input>
                 <w-input
                     :class="'mb2'"
+                    inner-icon-left="mdi mdi-cake"
                     label="Date de naissance"
                     v-model="user.person.dateOfBirth"
                     :name="'user[person][dateOfBirth]'"
@@ -32,15 +35,17 @@
                 ></w-input>
                 <w-input
                     :class="'mb2'"
+                    inner-icon-left="mdi mdi-email"
                     label="e-mail *"
                     :maxlength="255"
-                    v-model="user.email"
                     :name="'user[email]'"
                     :type="'email'"
                     :validators="[validators.required, validators.email]"
+                    v-model="user.email"
                 ></w-input>
                 <w-input
                     :class="'mb2'"
+                    inner-icon-left="mdi mdi-key"
                     label="Mot de passe *"
                     v-model="user.plainPassword"
                     :name="'user[plainPassword]'"
@@ -49,6 +54,7 @@
                 ></w-input>
                 <w-input
                     :class="'mb2'"
+                    inner-icon-left="mdi mdi-image"
                     label="Image de profil"
                     v-model="user.person.avatar"
                     :name="'user[person][avatar]'"
