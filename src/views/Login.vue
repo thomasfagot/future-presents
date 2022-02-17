@@ -30,21 +30,15 @@
         </small>
     </section>
 </template>
-<script>
-export default {
-    name: 'Login',
-    data() {
-        return {
-            email: null,
-            plainPassword: null,
-            validators: {
-                required: (value) => !!value || 'Champs requis',
-                email: (value) =>
-                    value.match(
-                        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-                    ) || 'e-mail invalide',
-            },
-        }
-    },
-}
+<script setup>
+import { reactive, ref } from 'vue'
+
+const email = ref(null)
+const plainPassword = ref(null)
+const validators = reactive({
+    required: (value) => !!value || 'Champ requis',
+    email: (value) =>
+        value.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/) ||
+        'e-mail invalide',
+})
 </script>
