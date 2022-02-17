@@ -13,7 +13,7 @@ class DateTypeExtension extends AbstractTypeExtension
         $resolver->setDefaults([
             'date_picker' => true,
             'widget' => 'single_text',
-            'format' => 'dd/MM/yyyy',
+            'format' => 'yyyy-MM-dd',
             'html5' => false,
             'model_timezone' => 'Europe/Paris',
             'view_timezone' => 'Europe/Paris',
