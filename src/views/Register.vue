@@ -1,13 +1,17 @@
 <template>
     <section class="width-400px text-left margin-center mt10">
         <w-card shadow :title="'Inscription'" title-class="blue-light5--bg">
-            <w-form :no-keyup-validation="true">
+            <w-form
+                :no-keyup-validation="true"
+                @submit.prevent="isValid && register()"
+                v-model="isValid"
+            >
                 <w-input
                     autofocus
                     :class="'mb2'"
                     label="Prénom *"
                     :maxlength="255"
-                    :model-value="user.person.firstname"
+                    v-model="user.person.firstname"
                     :name="'user[person][firstname]'"
                     :validators="[validators.required]"
                 ></w-input>
@@ -16,12 +20,12 @@
                     label="Nom"
                     :maxlength="255"
                     :name="'user[person][lastname]'"
-                    :model-value="user.person.lastname"
+                    v-model="user.person.lastname"
                 ></w-input>
                 <w-input
                     :class="'mb2'"
                     label="Date de naissance"
-                    :model-value="user.person.dateOfBirth"
+                    v-model="user.person.dateOfBirth"
                     :name="'user[person][dateOfBirth]'"
                     :type="'date'"
                     :validators="[validators.date]"
@@ -30,7 +34,7 @@
                     :class="'mb2'"
                     label="e-mail *"
                     :maxlength="255"
-                    :model-value="user.email"
+                    v-model="user.email"
                     :name="'user[email]'"
                     :type="'email'"
                     :validators="[validators.required, validators.email]"
@@ -38,7 +42,7 @@
                 <w-input
                     :class="'mb2'"
                     label="Mot de passe *"
-                    :model-value="user.plainPassword"
+                    v-model="user.plainPassword"
                     :name="'user[plainPassword]'"
                     :type="'password'"
                     :validators="[validators.required]"
@@ -46,13 +50,13 @@
                 <w-input
                     :class="'mb2'"
                     label="Image de profil"
-                    :model-value="user.person.avatar"
+                    v-model="user.person.avatar"
                     :name="'user[person][avatar]'"
                     :type="'url'"
                     :validators="[validators.url]"
                 ></w-input>
                 <div class="text-right mt4">
-                    <w-button type="submit">Se connecter</w-button>
+                    <w-button type="submit">S'inscrire</w-button>
                 </div>
             </w-form>
         </w-card>
@@ -63,7 +67,9 @@
 </template>
 <script setup>
 import { reactive } from 'vue'
+import store from '@/store'
 
+const isValid = null
 const user = reactive({
     person: {
         firstname: null,
@@ -81,8 +87,33 @@ const validators = reactive({
         'e-mail invalide',
     date: (value) => !isNaN(new Date(value).getTime()) || 'Date invalide',
     url: (value) =>
+        !value ||
         value.match(
             /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)/g
-        ) || 'URL invalide',
+        ) ||
+        'URL invalide',
 })
+function register() {
+    store.actions
+        .register({
+            user: {
+                person: {
+                    firstname: user.person.firstname,
+                    lastname: user.person.lastname,
+                    dateOfBirth: user.person.dateOfBirth,
+                    avatar: user.person.avatar,
+                },
+                email: user.email,
+                plainPassword: user.plainPassword,
+            },
+        })
+        .then(
+            (response) => {
+                console.log(response)
+            },
+            () => {
+                console.log('request error')
+            }
+        )
+}
 </script>
