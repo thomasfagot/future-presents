@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity('email')]
+#[UniqueEntity('email', message: 'Vous possédez déjà un compte avec cet e-mail.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use IdEntity;

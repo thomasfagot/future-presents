@@ -1,6 +1,7 @@
 <template>
     <section class="width-400px text-left margin-center mt10">
         <w-card shadow :title="'Connexion'" title-class="blue-light5--bg">
+            <root-errors :errors="formErrors" />
             <w-form :no-keyup-validation="true" @submit="login()">
                 <w-input
                     autofocus
@@ -23,7 +24,12 @@
                     v-model="password"
                 ></w-input>
                 <div class="text-right mt4">
-                    <w-button type="submit">Se connecter</w-button>
+                    <w-button
+                        type="submit"
+                        :loading="isLoading"
+                        :disabled="isLoading"
+                        >Se connecter</w-button
+                    >
                 </div>
             </w-form>
         </w-card>
@@ -35,9 +41,12 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import store from '@/store'
+import RootErrors from '@/components/RootErrors'
 
 const email = ref(null)
 const password = ref(null)
+const formErrors = ref([])
+const isLoading = ref(false)
 const validators = reactive({
     required: (value) => !!value || 'Champ requis',
     email: (value) =>
@@ -45,18 +54,31 @@ const validators = reactive({
         'e-mail invalide',
 })
 function login() {
+    isLoading.value = true
+    formErrors.value.splice(0, formErrors.value.length)
     store.actions
         .login({
             username: email.value,
             password: password.value,
         })
         .then(
-            (response) => {
-                console.log(response)
+            ({ data }) => {
+                if (data.success) {
+                    console.log(data)
+                } else {
+                    for (const field in data.errors) {
+                        data.errors[field].forEach((e) =>
+                            formErrors.value.push(e)
+                        )
+                    }
+                }
             },
-            (error) => {
-                console.log(error)
+            () => {
+                formErrors.value.push(
+                    'Adresse e-mail ou mot de passe invalide.'
+                )
             }
         )
+        .finally(() => (isLoading.value = false))
 }
 </script>
