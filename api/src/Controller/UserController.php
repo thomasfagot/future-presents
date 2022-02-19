@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use App\Traits\FormError;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -44,9 +45,9 @@ class UserController extends AbstractFOSRestController
         ], Response::HTTP_BAD_REQUEST);
     }
 
-    #[Rest\Get('/users/{id}', name: 'user.view')]
-    public function get(User $user): View
+    #[Rest\Get('/users/me', name: 'user.me')]
+    public function me(UserRepository $userRepository): View
     {
-        return $this->view($user, Response::HTTP_OK);
+        return $this->view($userRepository->findWithJoins($this->getUser()), Response::HTTP_OK);
     }
 }

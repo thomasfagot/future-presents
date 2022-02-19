@@ -37,12 +37,17 @@ const emptyUser = {
         lastname: null,
         dateOfBirth: null,
         avatar: null,
+        networkCollection: [],
+        wishCollection: [],
+        reservationCollection: [],
     },
 }
 
 const state = reactive({
     user: emptyUser,
     isLoading: false,
+    currentNetwork: null,
+    currentEvent: null,
 })
 
 const mutations = {
@@ -74,6 +79,13 @@ const actions = {
                     (error) => reject(error)
                 )
                 .catch((error) => reject(error))
+        }),
+    getUser: () =>
+        new Promise((resolve, reject) => {
+            instance.get('/users/me').then(
+                (response) => resolve(response),
+                (error) => reject(error)
+            )
         }),
 }
 

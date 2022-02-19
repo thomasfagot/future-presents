@@ -7,7 +7,6 @@ use App\Entity\Item;
 use App\Entity\Network;
 use App\Entity\Person;
 use App\Entity\Reservation;
-use App\Entity\User;
 use App\Entity\Wish;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -25,7 +24,6 @@ class CircularReferenceHandler
             $object instanceof Network => $this->router->generate('network.view', ['id' => $object->getId()]),
             $object instanceof Person => $this->router->generate('person.view', ['id' => $object->getId()]),
             $object instanceof Reservation => $this->router->generate('reservation.view', ['id' => $object->getId()]),
-            $object instanceof User => $this->router->generate('user.view', ['id' => $object->getId()]),
             $object instanceof Wish => $this->router->generate('wish.view', ['id' => $object->getId()]),
             default => $object->getId(),
         };

@@ -8,6 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -34,5 +35,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
         $this->_em->persist($user);
         $this->_em->flush();
+    }
+
+    public function findWithJoins(UserInterface $user): User
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.person', 'p')->addSelect('p')
+            ->leftJoin('p.networkCollection', 'n')->addSelect('n')
+            ->leftJoin('p.wishCollection', 'w')->addSelect('w')
+            ->leftJoin('p.reservationCollection', 'r')->addSelect('r')
+            ->andWhere('a.id = :id')
+            ->setParameter('id', $user)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
     }
 }
