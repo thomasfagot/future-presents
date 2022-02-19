@@ -29,6 +29,28 @@
                 >
             </template>
         </w-toolbar>
+
+        <w-toolbar v-if="store.isAuthenticated.value">
+            <w-flex>
+                <div class="md3 d-flex align-center pr4">
+                    <w-select
+                        :items="store.state.user.person.networkCollection"
+                        :item-value-key="'id'"
+                        :item-label-key="'name'"
+                        label="Réseau"
+                        no-unselect
+                        v-model="store.state.currentNetwork"
+                    >
+                    </w-select>
+                    <w-button
+                        class="ma1"
+                        bg-color="success"
+                        icon="wi-plus"
+                        :route="{ name: 'Network.add' }"
+                    ></w-button>
+                </div>
+            </w-flex>
+        </w-toolbar>
     </div>
 </template>
 <script setup>

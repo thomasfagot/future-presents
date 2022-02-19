@@ -3,6 +3,7 @@ import Register from '@/views/Register.vue'
 import Login from '@/views/Login.vue'
 import NotFound from '@/views/NotFound.vue'
 import Account from '@/views/Account.vue'
+import Network from '@/views/Network.vue'
 import store from '@/store'
 
 const routes = [
@@ -26,6 +27,14 @@ const routes = [
         name: 'Account',
         path: '/account',
         component: Account,
+        meta: {
+            title: 'Mon compte',
+        },
+    },
+    {
+        name: 'Network.add',
+        path: '/network/add',
+        component: Network,
         meta: {
             title: 'Mon compte',
         },

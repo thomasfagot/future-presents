@@ -55,9 +55,14 @@ const isAuthenticated = computed(() => !!state.user.id)
 const mutations = {
     setUser(user) {
         state.user = user
+        state.currentNetwork = user.person.networkCollection.find((n) => !!n.id)
     },
     setLoading(value) {
         state.isLoading = value
+    },
+    addNetwork(data) {
+        state.user.person.networkCollection.push(data)
+        state.currentNetwork = data.id
     },
 }
 
@@ -85,6 +90,13 @@ const actions = {
     getUser: () =>
         new Promise((resolve, reject) => {
             instance.get('/users/me').then(
+                (response) => resolve(response),
+                (error) => reject(error)
+            )
+        }),
+    addNetwork: (data) =>
+        new Promise((resolve, reject) => {
+            instance.post('/networks', data).then(
                 (response) => resolve(response),
                 (error) => reject(error)
             )

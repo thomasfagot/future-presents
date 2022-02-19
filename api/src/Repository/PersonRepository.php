@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Person;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @method Person|null find($id, $lockMode = null, $lockVersion = null)
@@ -27,6 +28,19 @@ class PersonRepository extends ServiceEntityRepository
             ->setParameter('person', $person)
             ->getQuery()
             ->getResult()
+        ;
+    }
+
+    public function findOneForUser(UserInterface $user): ?Person
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.networkCollection', 'n')->addSelect('n')
+            ->leftJoin('a.wishCollection', 'w')->addSelect('w')
+            ->leftJoin('a.reservationCollection', 'r')->addSelect('r')
+            ->andWhere('a.user = :id')
+            ->setParameter('id', $user)
+            ->getQuery()
+            ->getOneOrNullResult()
         ;
     }
 }
