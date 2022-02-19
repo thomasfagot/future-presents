@@ -4,6 +4,7 @@ import Login from '@/views/Login.vue'
 import NotFound from '@/views/NotFound.vue'
 import Account from '@/views/Account.vue'
 import Network from '@/views/Network.vue'
+import Event from '@/views/Event.vue'
 import store from '@/store'
 
 const routes = [
@@ -35,6 +36,14 @@ const routes = [
         name: 'Network.add',
         path: '/network/add',
         component: Network,
+        meta: {
+            title: 'Mon compte',
+        },
+    },
+    {
+        name: 'Event.add',
+        path: '/event/add',
+        component: Event,
         meta: {
             title: 'Mon compte',
         },

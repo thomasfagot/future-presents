@@ -37,15 +37,14 @@ const emptyUser = {
         lastname: null,
         dateOfBirth: null,
         avatar: null,
-        networkCollection: [],
-        wishCollection: [],
-        reservationCollection: [],
     },
 }
 
 const state = reactive({
-    user: emptyUser,
     isLoading: false,
+    user: emptyUser,
+    networks: [],
+    events: [],
     currentNetwork: null,
     currentEvent: null,
 })
@@ -55,14 +54,23 @@ const isAuthenticated = computed(() => !!state.user.id)
 const mutations = {
     setUser(user) {
         state.user = user
-        state.currentNetwork = user.person.networkCollection.find((n) => !!n.id)
+        state.networks = user.person.networkCollection
+        state.currentNetwork = user.person.networkCollection.find((n) => !!n)
+        state.events = state.currentNetwork
+            ? state.currentNetwork.eventCollection
+            : []
+        state.currentEvent = state.events ? state.events.find((e) => !!e) : null
     },
     setLoading(value) {
         state.isLoading = value
     },
     addNetwork(data) {
-        state.user.person.networkCollection.push(data)
-        state.currentNetwork = data.id
+        state.networks.push(data)
+        state.currentNetwork = data
+    },
+    addEvent(data) {
+        state.events.push(data)
+        state.currentEvent = data
     },
 }
 
@@ -101,6 +109,18 @@ const actions = {
                 (error) => reject(error)
             )
         }),
+    addEvent: (data) =>
+        new Promise((resolve, reject) => {
+            instance.post('/events', data).then(
+                (response) => resolve(response),
+                (error) => reject(error)
+            )
+        }),
 }
 
-export default { state: readonly(state), actions, mutations, isAuthenticated }
+export default {
+    state: readonly(state),
+    actions,
+    mutations,
+    isAuthenticated,
+}

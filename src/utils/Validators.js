@@ -3,9 +3,10 @@ const Validators = {
     email: (value) =>
         value.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/) ||
         'e-mail invalide',
-    date: (value) =>
+    dateInPast: (value) =>
         (!isNaN(new Date(value).getTime()) && new Date(value) < new Date()) ||
         'Date invalide',
+    date: (value) => !isNaN(new Date(value).getTime()) || 'Date invalide',
     url: (value) =>
         !value ||
         value.match(

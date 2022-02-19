@@ -31,7 +31,7 @@
                     v-model="user.person.dateOfBirth"
                     :name="'user[person][dateOfBirth]'"
                     :type="'date'"
-                    :validators="[Validators.date]"
+                    :validators="[Validators.dateInPast]"
                 ></w-input>
                 <w-input
                     :class="'mb2'"

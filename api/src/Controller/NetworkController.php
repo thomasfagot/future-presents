@@ -53,5 +53,4 @@ class NetworkController extends AbstractFOSRestController
             'errors' => $form->isSubmitted() ? $this->getFormErrors($form) : [],
         ], Response::HTTP_BAD_REQUEST);
     }
-
 }

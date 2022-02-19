@@ -30,11 +30,11 @@
             </template>
         </w-toolbar>
 
-        <w-toolbar v-if="store.isAuthenticated.value">
+        <w-toolbar>
             <w-flex>
                 <div class="md3 d-flex align-center pr4">
                     <w-select
-                        :items="store.state.user.person.networkCollection"
+                        :items="store.state.networks"
                         :item-value-key="'id'"
                         :item-label-key="'name'"
                         label="Réseau"
@@ -47,6 +47,26 @@
                         bg-color="success"
                         icon="wi-plus"
                         :route="{ name: 'Network.add' }"
+                    ></w-button>
+                </div>
+                <div
+                    class="md3 d-flex align-center pr4"
+                    v-if="store.state.currentNetwork"
+                >
+                    <w-select
+                        :items="store.state.events"
+                        :item-value-key="'id'"
+                        :item-label-key="'name'"
+                        label="Évènement"
+                        no-unselect
+                        v-model="store.state.currentEvent"
+                    >
+                    </w-select>
+                    <w-button
+                        class="ma1"
+                        bg-color="success"
+                        icon="wi-plus"
+                        :route="{ name: 'Event.add' }"
                     ></w-button>
                 </div>
             </w-flex>
