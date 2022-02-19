@@ -41,7 +41,7 @@ class UserController extends AbstractFOSRestController
         return $this->view([
             'success' => false,
             'errors' => $form->isSubmitted() ? $this->getFormErrors($form) : [],
-        ], Response::HTTP_OK);
+        ], Response::HTTP_BAD_REQUEST);
     }
 
     #[Rest\Get('/users/{id}', name: 'user.view')]

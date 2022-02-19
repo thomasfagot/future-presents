@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Register from '@/views/Register.vue'
 import Login from '@/views/Login.vue'
 import NotFound from '@/views/NotFound.vue'
+import Account from '@/views/Account.vue'
 
 const routes = [
     {
@@ -18,6 +19,14 @@ const routes = [
         component: Register,
         meta: {
             title: 'Inscription',
+        },
+    },
+    {
+        name: 'Account',
+        path: '/account',
+        component: Account,
+        meta: {
+            title: 'Mon compte',
         },
     },
     {

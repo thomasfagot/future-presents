@@ -4,7 +4,7 @@
             <root-errors :errors="formErrors" />
             <w-form
                 :no-keyup-validation="true"
-                @submit.prevent="isValid && register()"
+                @success="register()"
                 v-model="isValid"
             >
                 <w-input
@@ -71,8 +71,8 @@
                 ></w-input>
                 <div class="text-right mt4">
                     <w-button
-                        :loading="isLoading"
-                        :disabled="isLoading"
+                        :loading="store.state.isLoading"
+                        :disabled="store.state.isLoading"
                         type="submit"
                     >
                         S'inscrire
@@ -89,6 +89,7 @@
 import { reactive, ref } from 'vue'
 import store from '@/store'
 import RootErrors from '@/components/RootErrors'
+import router from '@/router'
 
 const isPassword = ref(true)
 const isValid = null
@@ -102,9 +103,8 @@ const user = reactive({
     email: null,
     plainPassword: null,
 })
-const isLoading = ref(false)
 const formErrors = ref([])
-const validators = reactive({
+const validators = {
     required: (value) => !!value || 'Champs requis',
     email: (value) =>
         value.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/) ||
@@ -122,10 +122,22 @@ const validators = reactive({
         !value || value.length >= 8 || '8 caractères minimum',
     maxLength255: (value) =>
         !value || value.length <= 255 || '255 caractères maximum',
-})
+}
+
+function handleErrors(response) {
+    if (response && response.data && response.data.errors) {
+        for (const field in response.data.errors) {
+            for (const message of response.data.errors[field]) {
+                formErrors.value.push(message)
+            }
+        }
+    } else {
+        formErrors.value.push('Une erreur est survenue.')
+    }
+}
+
 function register() {
     formErrors.value.splice(0, formErrors.value.length)
-    isLoading.value = true
     store.actions
         .register({
             user: {
@@ -139,20 +151,17 @@ function register() {
                 plainPassword: user.plainPassword,
             },
         })
-        .then(
-            ({ data }) => {
-                if (!data.success && data.errors) {
-                    for (const field in data.errors) {
-                        for (const error of data.errors[field]) {
-                            formErrors.value.push(error)
-                        }
-                    }
-                }
-            },
-            () => {
-                formErrors.value.push('Une erreur est survenue.')
-            }
-        )
-        .finally(() => (isLoading.value = false))
+        .then(() => {
+            store.actions
+                .login({
+                    username: user.email,
+                    password: user.plainPassword,
+                })
+                .then((response) => {
+                    store.mutations.setUser(response.data.data)
+                    router.push('/account')
+                })
+        })
+        .catch((error) => handleErrors(error.response))
 }
 </script>

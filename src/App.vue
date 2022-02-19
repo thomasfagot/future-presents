@@ -7,13 +7,8 @@
     </w-app>
 </template>
 
-<script>
+<script setup>
 import AppMenu from '@/components/AppMenu'
-
-export default {
-    name: 'App',
-    components: { AppMenu },
-}
 </script>
 
 <style>

@@ -19,15 +19,19 @@
                     inner-icon-left="mdi mdi-key"
                     label="Mot de passe *"
                     :name="'password'"
-                    :type="'password'"
-                    :validators="[validators.required]"
                     v-model="password"
+                    :type="isPassword ? 'password' : 'text'"
+                    :inner-icon-right="
+                        isPassword ? 'mdi mdi-eye-off' : 'mdi mdi-eye'
+                    "
+                    :validators="[validators.required]"
+                    @click:inner-icon-right="isPassword = !isPassword"
                 ></w-input>
                 <div class="text-right mt4">
                     <w-button
                         type="submit"
-                        :loading="isLoading"
-                        :disabled="isLoading"
+                        :loading="store.state.isLoading"
+                        :disabled="store.state.isLoading"
                         >Se connecter</w-button
                     >
                 </div>
@@ -42,11 +46,12 @@
 import { reactive, ref } from 'vue'
 import store from '@/store'
 import RootErrors from '@/components/RootErrors'
+import router from '@/router'
 
+const isPassword = ref(true)
 const email = ref(null)
 const password = ref(null)
 const formErrors = ref([])
-const isLoading = ref(false)
 const validators = reactive({
     required: (value) => !!value || 'Champ requis',
     email: (value) =>
@@ -54,31 +59,18 @@ const validators = reactive({
         'e-mail invalide',
 })
 function login() {
-    isLoading.value = true
     formErrors.value.splice(0, formErrors.value.length)
     store.actions
         .login({
             username: email.value,
             password: password.value,
         })
-        .then(
-            ({ data }) => {
-                if (data.success) {
-                    console.log(data)
-                } else {
-                    for (const field in data.errors) {
-                        data.errors[field].forEach((e) =>
-                            formErrors.value.push(e)
-                        )
-                    }
-                }
-            },
-            () => {
-                formErrors.value.push(
-                    'Adresse e-mail ou mot de passe invalide.'
-                )
-            }
+        .then((response) => {
+            store.mutations.setUser(response.data.data)
+            router.push('/account')
+        })
+        .catch(() =>
+            formErrors.value.push('Adresse e-mail ou mot de passe invalide.')
         )
-        .finally(() => (isLoading.value = false))
 }
 </script>
