@@ -23,9 +23,9 @@ onMounted(() => {
         .then(
             (response) => {
                 store.mutations.setUser(response.data)
-                router.push('/account')
+                router.push({ name: 'Account' })
             },
-            () => router.push('/')
+            () => router.push({ name: 'Login' })
         )
         .finally(() => (isLoadingApp.value = false))
 })

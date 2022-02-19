@@ -1,4 +1,4 @@
-import { reactive, readonly } from 'vue'
+import { computed, reactive, readonly } from 'vue'
 import axios from 'axios'
 
 const instance = axios.create({
@@ -50,6 +50,8 @@ const state = reactive({
     currentEvent: null,
 })
 
+const isAuthenticated = computed(() => !!state.user.id)
+
 const mutations = {
     setUser(user) {
         state.user = user
@@ -89,4 +91,4 @@ const actions = {
         }),
 }
 
-export default { state: readonly(state), actions, mutations }
+export default { state: readonly(state), actions, mutations, isAuthenticated }

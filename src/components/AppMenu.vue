@@ -1,7 +1,11 @@
 <template>
     <div>
         <w-toolbar id="main-menu">
-            <router-link :to="{ name: 'Login' }">
+            <router-link
+                :to="{
+                    name: store.isAuthenticated.value ? 'Account' : 'Login',
+                }"
+            >
                 <h1 class="title2">
                     <w-icon class="mr1 mb2" color="primary"
                         >mdi mdi-gift</w-icon
@@ -10,7 +14,7 @@
                 </h1>
             </router-link>
             <div class="spacer"></div>
-            <template v-if="!store.state.user.id">
+            <template v-if="!store.isAuthenticated.value">
                 <router-link :to="{ name: 'Login' }" :class="'px3'"
                     >Connexion</router-link
                 >

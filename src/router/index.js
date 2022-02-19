@@ -3,6 +3,7 @@ import Register from '@/views/Register.vue'
 import Login from '@/views/Login.vue'
 import NotFound from '@/views/NotFound.vue'
 import Account from '@/views/Account.vue'
+import store from '@/store'
 
 const routes = [
     {
@@ -44,6 +45,14 @@ const router = createRouter({
     routes,
 })
 
+router.beforeEach((to) => {
+    if (
+        !store.isAuthenticated.value &&
+        !['Login', 'Register', 'NotFound'].includes(to.name)
+    ) {
+        return { name: 'Login' }
+    }
+})
 router.afterEach((to) => {
     document.title = 'FuturePresents - ' + to.meta.title
 })
