@@ -3,8 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use App\Traits\IdEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -13,9 +13,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity('email', message: 'Vous possédez déjà un compte avec cet e-mail.')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, JWTUserInterface
 {
-    use IdEntity;
+    #[ORM\Column('id', type: 'integer', unique: true, nullable: false, options: ['unsigned' => true])]
+    #[ORM\Id]
+    #[ORM\GeneratedValue('IDENTITY')]
+    private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     #[Assert\NotBlank]
@@ -40,6 +43,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Valid]
     #[Assert\NotBlank]
     private ?Person $person = null;
+
+    public function setId($id): self
+    {
+        $this->id = null !== $id ? (int) $id : null;
+
+        return $this;
+    }
+
+    // temp fix for JwtAuthenticator strong type bug
+    public function getId(): ?string
+    {
+        return null === $this->id ? null : (string) $this->id;
+    }
 
     public function getEmail(): ?string
     {
@@ -122,5 +138,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPlainPassword(?string $plainPassword): void
     {
         $this->plainPassword = $plainPassword;
+    }
+
+    public static function createFromPayload($username, array $payload): User|JWTUserInterface
+    {
+        return (new self())->setId($username);
     }
 }
