@@ -48,7 +48,6 @@ body {
     text-align: center;
 }
 #app-content {
-    margin-top: 3em;
     padding: 10px;
 }
 .width-400px {

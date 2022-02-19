@@ -2,7 +2,7 @@
     <section class="width-400px text-left margin-center mt10">
         <w-card shadow :title="'Connexion'" title-class="blue-light5--bg">
             <root-errors :errors="formErrors" />
-            <w-form :no-keyup-validation="true" @submit="login()">
+            <w-form :no-keyup-validation="true" @success="login()">
                 <w-input
                     autofocus
                     :class="'mb2'"
@@ -11,7 +11,11 @@
                     :maxlength="255"
                     :name="'username'"
                     :type="'email'"
-                    :validators="[validators.required, validators.email]"
+                    :validators="[
+                        Validators.required,
+                        Validators.email,
+                        Validators.maxLength255,
+                    ]"
                     v-model="email"
                 ></w-input>
                 <w-input
@@ -24,7 +28,7 @@
                     :inner-icon-right="
                         isPassword ? 'mdi mdi-eye-off' : 'mdi mdi-eye'
                     "
-                    :validators="[validators.required]"
+                    :validators="[Validators.required, Validators.minLength8]"
                     @click:inner-icon-right="isPassword = !isPassword"
                 ></w-input>
                 <div class="text-right mt4">
@@ -43,23 +47,19 @@
     </section>
 </template>
 <script setup>
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import store from '@/store'
-import RootErrors from '@/components/RootErrors'
 import router from '@/router'
+import Validators from '@/utils/Validators'
+import RootErrors from '@/components/RootErrors'
 
 const isPassword = ref(true)
 const email = ref(null)
 const password = ref(null)
 const formErrors = ref([])
-const validators = reactive({
-    required: (value) => !!value || 'Champ requis',
-    email: (value) =>
-        value.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/) ||
-        'e-mail invalide',
-})
+
 function login() {
-    formErrors.value.splice(0, formErrors.value.length)
+    Validators.resetErrors(formErrors)
     store.actions
         .login({
             username: email.value,
@@ -69,8 +69,12 @@ function login() {
             store.mutations.setUser(response.data.data)
             router.push('/account')
         })
-        .catch(() =>
-            formErrors.value.push('Adresse e-mail ou mot de passe invalide.')
+        .catch((error) =>
+            Validators.handleErrors(
+                error.response,
+                formErrors,
+                'Adresse e-mail ou mot de passe invalide.'
+            )
         )
 }
 </script>
