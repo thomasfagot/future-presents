@@ -81,7 +81,7 @@
             </w-form>
         </w-card>
         <small class="mt3 d-block">
-            <router-link to="/">Connexion</router-link>
+            <router-link :to="{ name: 'Login' }">Connexion</router-link>
         </small>
     </section>
 </template>

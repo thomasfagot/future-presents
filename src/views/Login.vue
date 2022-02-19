@@ -38,7 +38,7 @@
             </w-form>
         </w-card>
         <small class="mt3 d-block">
-            <router-link to="/register">S'inscrire</router-link>
+            <router-link :to="{ name: 'Register' }">S'inscrire</router-link>
         </small>
     </section>
 </template>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <w-toolbar id="main-menu">
-            <router-link to="/">
+            <router-link :to="{ name: 'Login' }">
                 <h1 class="title2">
                     <w-icon class="mr1 mb2" color="primary"
                         >mdi mdi-gift</w-icon
@@ -11,14 +11,16 @@
             </router-link>
             <div class="spacer"></div>
             <template v-if="!store.state.user.id">
-                <router-link to="/" :class="'px3'">Connexion</router-link>
+                <router-link :to="{ name: 'Login' }" :class="'px3'"
+                    >Connexion</router-link
+                >
                 <w-divider vertical class="mx2"></w-divider>
-                <router-link to="/register" :class="'px3'"
+                <router-link :to="{ name: 'Register' }" :class="'px3'"
                     >Inscription</router-link
                 >
             </template>
             <template v-else>
-                <router-link to="/account" :class="'px3'"
+                <router-link :to="{ name: 'Account' }" :class="'px3'"
                     >Mon compte</router-link
                 >
             </template>
