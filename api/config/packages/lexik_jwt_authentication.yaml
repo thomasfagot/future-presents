@@ -11,3 +11,12 @@ lexik_jwt_authentication:
         cookie:
             enabled: true
             name: BEARER
+    set_cookies:
+        BEARER:
+            lifetime: null
+            samesite: lax
+            path: /
+            domain: null
+            secure: false
+            httpOnly: true
+    remove_token_from_body_when_cookies_used: true
