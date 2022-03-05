@@ -12,57 +12,45 @@ const routes = [
         name: 'Login',
         path: '/',
         component: Login,
-        meta: {
-            title: 'Connexion',
-        },
+        meta: { title: 'Connexion' },
     },
     {
         name: 'Register',
         path: '/register',
         component: Register,
-        meta: {
-            title: 'Inscription',
-        },
+        meta: { title: 'Inscription' },
     },
     {
         name: 'Account',
         path: '/account',
         component: Account,
-        meta: {
-            title: 'Mon compte',
-        },
+        meta: { title: 'Mon compte' },
     },
     {
         name: 'Network.add',
         path: '/network/add',
         component: Network,
-        meta: {
-            title: 'Ajouter un réseau',
-        },
+        props: { action: 'add' },
+        meta: { title: 'Ajouter un réseau' },
     },
     {
         name: 'Network.edit',
         path: '/network/edit',
         component: Network,
-        meta: {
-            title: 'Modifier le réseau',
-        },
+        props: { action: 'edit' },
+        meta: { title: 'Modifier le réseau' },
     },
     {
         name: 'Event.add',
         path: '/event/add',
         component: Event,
-        meta: {
-            title: 'Ajouter un évènement',
-        },
+        meta: { title: 'Ajouter un évènement' },
     },
     {
         name: 'NotFound',
         path: '/:pathMatch(.*)',
         component: NotFound,
-        meta: {
-            title: 'Page introuvable',
-        },
+        meta: { title: 'Page introuvable' },
     },
 ]
 

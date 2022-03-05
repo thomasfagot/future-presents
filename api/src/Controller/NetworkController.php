@@ -53,4 +53,24 @@ class NetworkController extends AbstractFOSRestController
             'errors' => $form->isSubmitted() ? $this->getFormErrors($form) : [],
         ], Response::HTTP_BAD_REQUEST);
     }
+
+    #[Rest\Put('/networks/{id}', name: 'networks.edit')]
+    public function edit(Request $request, EntityManagerInterface $entityManager, Network $network): View
+    {
+        $form = $this->createForm(NetworkType::class, $network, ['method' => 'PUT']);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->view([
+                'success' => true,
+                'network' => $network
+            ], Response::HTTP_OK);
+        }
+
+        return $this->view([
+            'success' => false,
+            'errors' => $form->isSubmitted() ? $this->getFormErrors($form) : [],
+        ], Response::HTTP_BAD_REQUEST);
+    }
 }

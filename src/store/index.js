@@ -70,6 +70,14 @@ const mutations = {
         state.networks.push(data)
         state.currentNetwork = data
     },
+    editNetwork(data) {
+        state.networks.splice(
+            state.networks.findIndex((n) => n.id === state.currentNetwork.id),
+            1,
+            data
+        )
+        state.currentNetwork = data
+    },
     addEvent(data) {
         state.events.push(data)
         state.currentEvent = data
@@ -111,6 +119,13 @@ const actions = {
     addNetwork: (data) =>
         new Promise((resolve, reject) => {
             instance.post('/networks', data).then(
+                (response) => resolve(response),
+                (error) => reject(error)
+            )
+        }),
+    editNetwork: (data) =>
+        new Promise((resolve, reject) => {
+            instance.put('/networks/' + state.currentNetwork.id, data).then(
                 (response) => resolve(response),
                 (error) => reject(error)
             )
