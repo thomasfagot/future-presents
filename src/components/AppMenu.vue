@@ -42,7 +42,7 @@
                         v-model="store.state.currentNetwork"
                     >
                     </w-select>
-                    <w-menu hide-on-menu-click>
+                    <w-menu hide-on-menu-click arrow>
                         <template #activator="{ on }">
                             <w-button
                                 v-on="on"
@@ -70,7 +70,7 @@
                         v-model="store.state.currentEvent"
                     >
                     </w-select>
-                    <w-menu hide-on-menu-click>
+                    <w-menu hide-on-menu-click arrow>
                         <template #activator="{ on }">
                             <w-button
                                 v-on="on"
