@@ -37,7 +37,7 @@ const routes = [
         path: '/network/add',
         component: Network,
         meta: {
-            title: 'Mon compte',
+            title: 'Ajouter un réseau',
         },
     },
     {
@@ -45,7 +45,7 @@ const routes = [
         path: '/event/add',
         component: Event,
         meta: {
-            title: 'Mon compte',
+            title: 'Ajouter un évènement',
         },
     },
     {
