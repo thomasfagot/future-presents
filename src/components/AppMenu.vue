@@ -30,7 +30,7 @@
             </template>
         </w-toolbar>
 
-        <w-toolbar>
+        <w-toolbar v-if="store.isAuthenticated.value">
             <w-flex>
                 <div class="md3 d-flex align-center pr4">
                     <w-select
