@@ -12,7 +12,7 @@
                     :name="'network[name]'"
                     :type="'text'"
                     :validators="[Validators.required, Validators.maxLength255]"
-                    v-model="name"
+                    v-model="data.name"
                 ></w-input>
                 <div class="text-right mt4">
                     <w-button
@@ -30,16 +30,18 @@
 import store from '@/store'
 import Validators from '@/utils/Validators'
 import RootErrors from '@/components/RootErrors'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import router from '@/router'
 
-const name = ref(null)
+const data = reactive({
+    name: null,
+})
 const formErrors = ref([])
 
 function submit() {
     Validators.resetErrors(formErrors)
     store.actions
-        .addNetwork({ network: { name: name.value } })
+        .addNetwork({ network: { name: data.name } })
         .then((response) => {
             store.mutations.addNetwork(response.data.network)
             router.push('/account')

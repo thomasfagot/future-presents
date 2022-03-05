@@ -12,7 +12,7 @@
                     :name="'event[name]'"
                     :type="'text'"
                     :validators="[Validators.required, Validators.maxLength255]"
-                    v-model="name"
+                    v-model="data.name"
                 ></w-input>
                 <w-input
                     :class="'mb2'"
@@ -21,7 +21,7 @@
                     :name="'event[date]'"
                     :type="'date'"
                     :validators="[Validators.required, Validators.date]"
-                    v-model="date"
+                    v-model="data.date"
                 ></w-input>
                 <w-input
                     :class="'mb2'"
@@ -31,7 +31,7 @@
                     :name="'event[cover]'"
                     :type="'url'"
                     :validators="[Validators.url, Validators.maxLength255]"
-                    v-model="cover"
+                    v-model="data.cover"
                 ></w-input>
                 <div class="text-right mt4">
                     <w-button
@@ -49,12 +49,14 @@
 import store from '@/store'
 import Validators from '@/utils/Validators'
 import RootErrors from '@/components/RootErrors'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import router from '@/router'
 
-const name = ref(null)
-const date = ref(null)
-const cover = ref(null)
+const data = reactive({
+    name: null,
+    date: null,
+    cover: null,
+})
 const formErrors = ref([])
 
 function submit() {
@@ -62,9 +64,9 @@ function submit() {
     store.actions
         .addEvent({
             event: {
-                name: name.value,
-                date: date.value,
-                cover: cover.value,
+                name: data.name,
+                date: data.date,
+                cover: data.cover,
                 network: store.state.currentNetwork.id,
             },
         })
@@ -73,7 +75,6 @@ function submit() {
             router.push('/account')
         })
         .catch((error) => {
-            console.log(error)
             Validators.handleErrors(error.response, formErrors)
         })
 }
