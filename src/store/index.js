@@ -58,10 +58,14 @@ const mutations = {
         state.user = user
         state.networks = user.person.networkCollection
         state.currentNetwork = user.person.networkCollection.find((n) => !!n)
-        state.events = state.currentNetwork
-            ? state.currentNetwork.eventCollection
-            : []
-        state.currentEvent = state.events ? state.events.find((e) => !!e) : null
+        state.events = user.person.networkCollection
+            .map((n) => n.eventCollection)
+            .flat()
+        state.currentEvent = state.events.length
+            ? state.events.find(
+                  (e) => state.currentNetwork.id === parseInt(e.network)
+              )
+            : null
     },
     setLoading(value) {
         state.isLoading = value
@@ -78,9 +82,19 @@ const mutations = {
         )
         state.currentNetwork = data
     },
+    setCurrentNetwork(id) {
+        state.currentNetwork = state.networks.find((n) => n.id === parseInt(id))
+        state.currentEvent = state.events.find(
+            (e) => state.currentNetwork.id === parseInt(e.network)
+        )
+    },
     addEvent(data) {
+        data.network = data.network.id
         state.events.push(data)
         state.currentEvent = data
+    },
+    setCurrentEvent(id) {
+        state.currentEvent = state.events.find((e) => e.id === parseInt(id))
     },
 }
 

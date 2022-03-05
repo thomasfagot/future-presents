@@ -62,7 +62,7 @@
                         :item-label-key="'name'"
                         label="Réseau"
                         no-unselect
-                        v-model="store.state.currentNetwork"
+                        v-model="currentNetwork"
                     >
                     </w-select>
                     <w-menu hide-on-menu-click arrow>
@@ -95,12 +95,18 @@
                     v-if="store.state.currentNetwork"
                 >
                     <w-select
-                        :items="store.state.events"
+                        :items="
+                            store.state.events.filter(
+                                (e) =>
+                                    store.state.currentNetwork.id ===
+                                    parseInt(e.network)
+                            )
+                        "
                         :item-value-key="'id'"
                         :item-label-key="'name'"
                         label="Évènement"
                         no-unselect
-                        v-model="store.state.currentEvent"
+                        v-model="currentEvent"
                     >
                     </w-select>
                     <w-menu hide-on-menu-click arrow>
@@ -125,7 +131,24 @@
 <script setup>
 import store from '@/store'
 import router from '@/router'
+import { computed } from 'vue'
 
+const currentNetwork = computed({
+    get() {
+        return store.state.currentNetwork
+    },
+    set(newValue) {
+        store.mutations.setCurrentNetwork(newValue)
+    },
+})
+const currentEvent = computed({
+    get() {
+        return store.state.currentEvent
+    },
+    set(newValue) {
+        store.mutations.setCurrentEvent(newValue)
+    },
+})
 function logout() {
     store.actions.logout().then(() => router.push({ name: 'Login' }))
 }
