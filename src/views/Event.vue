@@ -72,7 +72,7 @@ function submit() {
         })
         .then((response) => {
             store.mutations.addEvent(response.data.event)
-            router.push('/account')
+            router.push({ name: 'Account' })
         })
         .catch((error) => {
             Validators.handleErrors(error.response, formErrors)

@@ -129,7 +129,7 @@ function register() {
                 })
                 .then((response) => {
                     store.mutations.setUser(response.data.data)
-                    router.push('/account')
+                    router.push({ name: 'Network.add' })
                 })
         })
         .catch((error) => Validators.handleErrors(error.response, formErrors))

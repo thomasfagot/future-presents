@@ -67,7 +67,7 @@ function login() {
         })
         .then((response) => {
             store.mutations.setUser(response.data.data)
-            router.push('/account')
+            router.push({ name: 'Account' })
         })
         .catch((error) =>
             Validators.handleErrors(

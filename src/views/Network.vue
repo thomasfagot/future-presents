@@ -44,7 +44,7 @@ function submit() {
         .addNetwork({ network: { name: data.name } })
         .then((response) => {
             store.mutations.addNetwork(response.data.network)
-            router.push('/account')
+            router.push({ name: 'Event.add' })
         })
         .catch((error) => Validators.handleErrors(error.response, formErrors))
 }
