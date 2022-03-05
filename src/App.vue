@@ -60,4 +60,24 @@ body {
 .w-button.size--md {
     height: 30px !important;
 }
+.cursor-pointer {
+    cursor: pointer;
+}
+.avatar-image .w-image {
+    background-position: center;
+    border-radius: 100%;
+}
+.avatar-text {
+    background-color: #ef6c00;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 100%;
+    text-align: center;
+}
+.avatar-small {
+    height: 40px !important;
+    width: 40px !important;
+    line-height: 40px;
+}
 </style>

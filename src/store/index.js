@@ -37,6 +37,8 @@ const emptyUser = {
         lastname: null,
         dateOfBirth: null,
         avatar: null,
+        networkCollection: [],
+        eventCollection: [],
     },
 }
 
@@ -91,6 +93,19 @@ const actions = {
                 .post('/register', data)
                 .then(
                     (response) => resolve(response),
+                    (error) => reject(error)
+                )
+                .catch((error) => reject(error))
+        }),
+    logout: () =>
+        new Promise((resolve, reject) => {
+            instance
+                .get('/logout')
+                .then(
+                    (response) => {
+                        mutations.setUser(emptyUser)
+                        resolve(response)
+                    },
                     (error) => reject(error)
                 )
                 .catch((error) => reject(error))

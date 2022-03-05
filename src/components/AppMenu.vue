@@ -24,9 +24,32 @@
                 >
             </template>
             <template v-else>
-                <router-link :to="{ name: 'Account' }" :class="'px3'"
-                    >Mon compte</router-link
-                >
+                <w-menu hide-on-menu-click arrow align-right>
+                    <template #activator="{ on }">
+                        <w-image
+                            v-if="store.state.user.person.avatar"
+                            v-on="on"
+                            class="avatar-image avatar-small cursor-pointer"
+                            :src="store.state.user.person.avatar"
+                        ></w-image>
+                        <div
+                            v-else
+                            v-on="on"
+                            class="avatar-text avatar-small cursor-pointer"
+                        >
+                            {{
+                                ('' + store.state.user.person.firstname)
+                                    .substring(0, 1)
+                                    .toUpperCase()
+                            }}
+                        </div>
+                    </template>
+                    <router-link :to="{ name: 'Account' }" :class="'px3'"
+                        >Mon compte</router-link
+                    >
+                    <w-divider class="my2"></w-divider>
+                    <a href="#" @click="logout()">Se déconnecter</a>
+                </w-menu>
             </template>
         </w-toolbar>
 
@@ -54,6 +77,16 @@
                         </template>
                         <router-link :to="{ name: 'Network.add' }">
                             Nouveau réseau
+                        </router-link>
+                        <w-divider
+                            v-if="store.state.currentNetwork"
+                            class="my2"
+                        ></w-divider>
+                        <router-link
+                            v-if="store.state.currentNetwork"
+                            :to="{ name: 'Network.edit' }"
+                        >
+                            Modifier le réseau
                         </router-link>
                     </w-menu>
                 </div>
@@ -91,6 +124,11 @@
 </template>
 <script setup>
 import store from '@/store'
+import router from '@/router'
+
+function logout() {
+    store.actions.logout().then(() => router.push({ name: 'Login' }))
+}
 </script>
 <style scoped>
 .router-link-exact-active {

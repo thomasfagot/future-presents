@@ -41,6 +41,14 @@ const routes = [
         },
     },
     {
+        name: 'Network.edit',
+        path: '/network/edit',
+        component: Network,
+        meta: {
+            title: 'Modifier le réseau',
+        },
+    },
+    {
         name: 'Event.add',
         path: '/event/add',
         component: Event,

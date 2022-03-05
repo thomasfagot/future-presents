@@ -50,4 +50,14 @@ class UserController extends AbstractFOSRestController
     {
         return $this->view($userRepository->findWithJoins($this->getUser()), Response::HTTP_OK);
     }
+
+    #[Rest\Get('/logout', name: 'user.logout')]
+    public function logout(): Response
+    {
+        $response = new Response(null, Response::HTTP_NO_CONTENT);
+        $response->headers->clearCookie('BEARER');
+        $response->headers->clearCookie('refresh_token');
+
+        return $response;
+    }
 }
