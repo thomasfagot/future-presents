@@ -65,16 +65,17 @@ function login() {
             username: email.value,
             password: password.value,
         })
-        .then((response) => {
-            store.mutations.setUser(response.data.data)
-            router.push({ name: 'Account' })
-        })
-        .catch((error) =>
-            Validators.handleErrors(
-                error.response,
-                formErrors,
-                'Adresse e-mail ou mot de passe invalide.'
-            )
+        .then(
+            (response) => {
+                store.mutations.setUser(response.data.data)
+                router.push({ name: 'Account' })
+            },
+            (error) =>
+                Validators.handleErrors(
+                    error.response,
+                    formErrors,
+                    'Adresse e-mail ou mot de passe invalide.'
+                )
         )
 }
 </script>

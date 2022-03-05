@@ -121,17 +121,19 @@ function register() {
                 plainPassword: user.plainPassword,
             },
         })
-        .then(() => {
-            store.actions
-                .login({
-                    username: user.email,
-                    password: user.plainPassword,
-                })
-                .then((response) => {
-                    store.mutations.setUser(response.data.data)
-                    router.push({ name: 'Network.add' })
-                })
-        })
-        .catch((error) => Validators.handleErrors(error.response, formErrors))
+        .then(
+            () => {
+                store.actions
+                    .login({
+                        username: user.email,
+                        password: user.plainPassword,
+                    })
+                    .then((response) => {
+                        store.mutations.setUser(response.data.data)
+                        router.push({ name: 'Network.add' })
+                    })
+            },
+            (error) => Validators.handleErrors(error.response, formErrors)
+        )
 }
 </script>

@@ -79,36 +79,27 @@ const mutations = {
 const actions = {
     login: (data) =>
         new Promise((resolve, reject) => {
-            instance
-                .post('/login', data)
-                .then(
-                    (response) => resolve(response),
-                    (error) => reject(error)
-                )
-                .catch((error) => reject(error))
+            instance.post('/login', data).then(
+                (response) => resolve(response),
+                (error) => reject(error)
+            )
         }),
     register: (data) =>
         new Promise((resolve, reject) => {
-            instance
-                .post('/register', data)
-                .then(
-                    (response) => resolve(response),
-                    (error) => reject(error)
-                )
-                .catch((error) => reject(error))
+            instance.post('/register', data).then(
+                (response) => resolve(response),
+                (error) => reject(error)
+            )
         }),
     logout: () =>
         new Promise((resolve, reject) => {
-            instance
-                .get('/logout')
-                .then(
-                    (response) => {
-                        mutations.setUser(emptyUser)
-                        resolve(response)
-                    },
-                    (error) => reject(error)
-                )
-                .catch((error) => reject(error))
+            instance.get('/logout').then(
+                (response) => {
+                    mutations.setUser(emptyUser)
+                    resolve(response)
+                },
+                (error) => reject(error)
+            )
         }),
     getUser: () =>
         new Promise((resolve, reject) => {

@@ -40,12 +40,12 @@ const formErrors = ref([])
 
 function submit() {
     Validators.resetErrors(formErrors)
-    store.actions
-        .addNetwork({ network: { name: data.name } })
-        .then((response) => {
+    store.actions.addNetwork({ network: { name: data.name } }).then(
+        (response) => {
             store.mutations.addNetwork(response.data.network)
             router.push({ name: 'Event.add' })
-        })
-        .catch((error) => Validators.handleErrors(error.response, formErrors))
+        },
+        (error) => Validators.handleErrors(error.response, formErrors)
+    )
 }
 </script>

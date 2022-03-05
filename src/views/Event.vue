@@ -70,12 +70,12 @@ function submit() {
                 network: store.state.currentNetwork.id,
             },
         })
-        .then((response) => {
-            store.mutations.addEvent(response.data.event)
-            router.push({ name: 'Account' })
-        })
-        .catch((error) => {
-            Validators.handleErrors(error.response, formErrors)
-        })
+        .then(
+            (response) => {
+                store.mutations.addEvent(response.data.event)
+                router.push({ name: 'Account' })
+            },
+            (error) => Validators.handleErrors(error.response, formErrors)
+        )
 }
 </script>
