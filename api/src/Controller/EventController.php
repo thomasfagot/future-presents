@@ -51,4 +51,24 @@ class EventController extends AbstractFOSRestController
             'errors' => $form->isSubmitted() ? $this->getFormErrors($form) : [],
         ], Response::HTTP_BAD_REQUEST);
     }
+
+    #[Rest\Put('/events/{id}', name: 'events.edit')]
+    public function edit(Request $request, EntityManagerInterface $entityManager, Event $event): View
+    {
+        $form = $this->createForm(EventType::class, $event, ['method' => 'PUT']);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->view([
+                'success' => true,
+                'event' => $event
+            ], Response::HTTP_OK);
+        }
+
+        return $this->view([
+            'success' => false,
+            'errors' => $form->isSubmitted() ? $this->getFormErrors($form) : [],
+        ], Response::HTTP_BAD_REQUEST);
+    }
 }

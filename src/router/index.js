@@ -44,7 +44,15 @@ const routes = [
         name: 'Event.add',
         path: '/event/add',
         component: Event,
+        props: { action: 'add' },
         meta: { title: 'Ajouter un évènement' },
+    },
+    {
+        name: 'Event.edit',
+        path: '/event/edit',
+        component: Event,
+        props: { action: 'edit' },
+        meta: { title: "Modifier l'évènement" },
     },
     {
         name: 'NotFound',

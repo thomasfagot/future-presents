@@ -122,6 +122,16 @@
                         <router-link :to="{ name: 'Event.add' }">
                             Nouvel évènement
                         </router-link>
+                        <w-divider
+                            v-if="store.state.currentEvent"
+                            class="my2"
+                        ></w-divider>
+                        <router-link
+                            v-if="store.state.currentEvent"
+                            :to="{ name: 'Event.edit' }"
+                        >
+                            Modifier l'évènement
+                        </router-link>
                     </w-menu>
                 </div>
             </w-flex>

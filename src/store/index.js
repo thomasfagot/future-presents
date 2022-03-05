@@ -93,6 +93,15 @@ const mutations = {
         state.events.push(data)
         state.currentEvent = data
     },
+    editEvent(data) {
+        data.network = data.network.id
+        state.events.splice(
+            state.events.findIndex((e) => e.id === state.currentEvent.id),
+            1,
+            data
+        )
+        state.currentEvent = data
+    },
     setCurrentEvent(id) {
         state.currentEvent = state.events.find((e) => e.id === parseInt(id))
     },
@@ -147,6 +156,13 @@ const actions = {
     addEvent: (data) =>
         new Promise((resolve, reject) => {
             instance.post('/events', data).then(
+                (response) => resolve(response),
+                (error) => reject(error)
+            )
+        }),
+    editEvent: (data) =>
+        new Promise((resolve, reject) => {
+            instance.put('/events/' + state.currentEvent.id, data).then(
                 (response) => resolve(response),
                 (error) => reject(error)
             )
