@@ -42,12 +42,20 @@
                         v-model="store.state.currentNetwork"
                     >
                     </w-select>
-                    <w-button
-                        class="ma1"
-                        bg-color="success"
-                        icon="wi-plus"
-                        :route="{ name: 'Network.add' }"
-                    ></w-button>
+                    <w-menu hide-on-menu-click>
+                        <template #activator="{ on }">
+                            <w-button
+                                v-on="on"
+                                class="ma1"
+                                icon="mdi mdi-dots-vertical"
+                                outline
+                                text
+                            ></w-button>
+                        </template>
+                        <router-link :to="{ name: 'Network.add' }">
+                            Nouveau réseau
+                        </router-link>
+                    </w-menu>
                 </div>
                 <div
                     class="md3 d-flex align-center pr4"
@@ -62,12 +70,20 @@
                         v-model="store.state.currentEvent"
                     >
                     </w-select>
-                    <w-button
-                        class="ma1"
-                        bg-color="success"
-                        icon="wi-plus"
-                        :route="{ name: 'Event.add' }"
-                    ></w-button>
+                    <w-menu hide-on-menu-click>
+                        <template #activator="{ on }">
+                            <w-button
+                                v-on="on"
+                                class="ma1"
+                                icon="mdi mdi-dots-vertical"
+                                outline
+                                text
+                            ></w-button>
+                        </template>
+                        <router-link :to="{ name: 'Event.add' }">
+                            Nouvel évènement
+                        </router-link>
+                    </w-menu>
                 </div>
             </w-flex>
         </w-toolbar>
