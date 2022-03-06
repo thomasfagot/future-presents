@@ -1,10 +1,6 @@
 import { computed, reactive, readonly } from 'vue'
-import axios from 'axios'
+import instance from '@/utils/Api'
 
-const instance = axios.create({
-    baseURL: 'http://localhost/api',
-    withCredentials: true,
-})
 instance.interceptors.request.use(
     function (config) {
         mutations.setLoading(true)
@@ -16,7 +12,6 @@ instance.interceptors.request.use(
     }
 )
 
-// Add a response interceptor
 instance.interceptors.response.use(
     function (response) {
         mutations.setLoading(false)
