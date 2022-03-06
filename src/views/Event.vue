@@ -46,8 +46,12 @@
                         type="submit"
                         :loading="store.state.isLoading"
                         :disabled="store.state.isLoading"
-                        >Créer</w-button
                     >
+                        <template v-if="'edit' === props.action">
+                            Valider
+                        </template>
+                        <template v-else>Créer</template>
+                    </w-button>
                 </div>
             </w-form>
         </w-card>
