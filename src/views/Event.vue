@@ -1,5 +1,14 @@
 <template>
-    <section class="width-400px text-left margin-center mt10">
+    <section class="width-400px text-left margin-center mt4">
+        <div
+            v-if="'edit' === props.action && store.state.currentEvent.cover"
+            class="text-center mb4"
+        >
+            <w-image
+                class="avatar-image avatar-medium"
+                :src="store.state.currentEvent.cover"
+            ></w-image>
+        </div>
         <w-card
             shadow
             :title="

@@ -80,4 +80,9 @@ body {
     width: 40px !important;
     line-height: 40px;
 }
+.avatar-medium {
+    height: 100px !important;
+    width: 100px !important;
+    line-height: 100px;
+}
 </style>

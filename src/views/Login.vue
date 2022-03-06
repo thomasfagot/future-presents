@@ -1,5 +1,5 @@
 <template>
-    <section class="width-400px text-left margin-center mt10">
+    <section class="width-400px text-left margin-center mt4">
         <w-card shadow :title="'Connexion'" title-class="blue-light5--bg">
             <root-errors :errors="formErrors" />
             <w-form :no-keyup-validation="true" @success="login()">
