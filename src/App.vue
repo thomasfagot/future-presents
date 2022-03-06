@@ -71,7 +71,6 @@ body {
     background-color: #ef6c00;
     color: white;
     font-weight: bold;
-    font-size: 20px;
     border-radius: 100%;
     text-align: center;
 }
@@ -79,16 +78,22 @@ body {
     height: 40px !important;
     width: 40px !important;
     line-height: 40px;
+    font-size: 20px;
 }
 .avatar-medium {
-    height: 100px !important;
-    width: 100px !important;
+    max-height: 100px !important;
+    max-width: 100px !important;
     line-height: 100px;
+    font-size: 60px;
 }
 .w-card.w-menu {
     text-align: left;
 }
 a .w-icon {
     margin-top: -3px;
+}
+.margin-auto {
+    margin-left: auto;
+    margin-right: auto;
 }
 </style>
