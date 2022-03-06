@@ -30,6 +30,23 @@ class UserController extends AbstractFOSRestController
                 ->setRoles(['ROLE_USER'])
                 ->eraseCredentials()
             ;
+            if ($user->getPerson() && !$user->getPerson()->getAvatar()) {
+                try {
+                    $curl = \curl_init();
+                    \curl_setopt_array($curl, [
+                        CURLOPT_URL => 'https://www.gravatar.com/'.\md5(\strtolower(\trim($user->getEmail()))).'.json',
+                        CURLOPT_TIMEOUT => 5,
+                        CURLOPT_CONNECTTIMEOUT => 5,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0',
+                    ]);
+                    $response = \json_decode(\curl_exec($curl), true, 512, JSON_THROW_ON_ERROR);
+                    $user->getPerson()->setAvatar($response['entry'][0]['photos'][0]['value'] ?? null);
+                } catch (\Exception) {
+                }
+            }
+
             $entityManager->persist($user);
             $entityManager->flush();
 
