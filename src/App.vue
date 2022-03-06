@@ -85,4 +85,10 @@ body {
     width: 100px !important;
     line-height: 100px;
 }
+.w-card.w-menu {
+    text-align: left;
+}
+a .w-icon {
+    margin-top: -3px;
+}
 </style>

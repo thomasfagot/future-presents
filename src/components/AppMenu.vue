@@ -44,11 +44,15 @@
                             }}
                         </div>
                     </template>
-                    <router-link :to="{ name: 'Account' }" :class="'px3'"
-                        >Mon compte</router-link
-                    >
+                    <router-link :to="{ name: 'Account' }">
+                        <w-icon>mdi mdi-account</w-icon>
+                        Mon compte
+                    </router-link>
                     <w-divider class="my2"></w-divider>
-                    <a href="#" @click="logout()">Se déconnecter</a>
+                    <a href="#" @click="logout()">
+                        <w-icon>mdi mdi-logout</w-icon>
+                        Se déconnecter
+                    </a>
                 </w-menu>
             </template>
         </w-toolbar>
@@ -76,6 +80,7 @@
                             ></w-button>
                         </template>
                         <router-link :to="{ name: 'Network.add' }">
+                            <w-icon>mdi mdi-plus</w-icon>
                             Nouveau réseau
                         </router-link>
                         <w-divider
@@ -86,6 +91,7 @@
                             v-if="store.state.currentNetwork"
                             :to="{ name: 'Network.edit' }"
                         >
+                            <w-icon>mdi mdi-pencil</w-icon>
                             Modifier le réseau
                         </router-link>
                     </w-menu>
@@ -120,6 +126,7 @@
                             ></w-button>
                         </template>
                         <router-link :to="{ name: 'Event.add' }">
+                            <w-icon>mdi mdi-plus</w-icon>
                             Nouvel évènement
                         </router-link>
                         <w-divider
@@ -130,6 +137,7 @@
                             v-if="store.state.currentEvent"
                             :to="{ name: 'Event.edit' }"
                         >
+                            <w-icon>mdi mdi-pencil</w-icon>
                             Modifier l'évènement
                         </router-link>
                     </w-menu>
